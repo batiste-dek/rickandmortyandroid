@@ -1,0 +1,50 @@
+package com.example.rickandmorty.data.di;
+
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.google.gson.Gson;
+
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class FakeDependencyInjection {
+    private static Retrofit retrofit;
+    private static Gson gson;
+
+    /**
+     * Creates and/or return a singleton Retrofit object in order to perform HTTP requests within our application
+     * @return Retrofit singleton
+     */
+    public static Retrofit getRetrofit() {
+        if (retrofit == null) {
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .addInterceptor(interceptor)
+                    .addNetworkInterceptor(new StethoInterceptor())
+                    .build();
+            retrofit = new Retrofit
+                    .Builder()
+                    .baseUrl("https://rickandmortyapi.com/api/")
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(getGson()))
+                    .client(client)
+                    .build();
+
+        }
+        return retrofit;
+    }
+
+    /**
+     * Creates and/or return a singleton Gson object in order to serialize/deserialize our HTTP requests
+     * @return Gson singleton
+     */
+    private static Gson getGson() {
+        if(gson == null) {
+            gson = new Gson();
+        }
+        return gson;
+    }
+}
