@@ -18,6 +18,6 @@ public class RickAndMortyRemoteDataSource {
     }
 
     public Single<RMCharacter> getCharacter(int characterId) {
-        return this.apiService.getCharacter(int);
+        return this.apiService.getCharacter(characterId);
     }
 }
