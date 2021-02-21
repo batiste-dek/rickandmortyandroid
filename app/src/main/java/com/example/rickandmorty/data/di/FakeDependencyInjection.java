@@ -4,6 +4,7 @@ import com.example.rickandmorty.data.api.RickAndMortyApiService;
 import com.example.rickandmorty.data.repository.RickAndMortyDataRepository;
 import com.example.rickandmorty.data.repository.RickAndMortyRepository;
 import com.example.rickandmorty.data.repository.remote.RickAndMortyRemoteDataSource;
+import com.example.rickandmorty.presentation.ViewModelFactory;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 
@@ -23,6 +24,14 @@ public class FakeDependencyInjection {
     private static Gson gson;
     private static RickAndMortyApiService apiService;
     private static RickAndMortyRepository repository;
+    private static ViewModelFactory viewModelFactory;
+
+    public static ViewModelFactory getViewModelFactory() {
+        if (viewModelFactory == null) {
+            viewModelFactory = new ViewModelFactory(getRepository());
+        }
+        return viewModelFactory;
+    }
 
     /**
      * Creates and/or return a singleton Retrofit object in order to perform HTTP requests within our application
