@@ -8,7 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
-import com.example.rickandmorty.presentation.search.fragment.ChractersSearchFragment;
+import com.example.rickandmorty.presentation.search.fragment.CharactersSearchFragment;
 
 public class RickAndMortyActivity extends AppCompatActivity {
 
@@ -19,7 +19,7 @@ public class RickAndMortyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         viewPager = findViewById(R.id.view_pager);
-        final ChractersSearchFragment fragment = new ChractersSearchFragment();
+        final CharactersSearchFragment fragment = new CharactersSearchFragment();
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @NonNull
             @Override

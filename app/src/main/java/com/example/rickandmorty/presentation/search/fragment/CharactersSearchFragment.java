@@ -2,8 +2,10 @@ package com.example.rickandmorty.presentation.search.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,14 +18,18 @@ import android.widget.ImageView;
 
 import com.example.rickandmorty.R;
 import com.example.rickandmorty.data.di.FakeDependencyInjection;
+import com.example.rickandmorty.presentation.search.adapter.CharacterAdapter;
+import com.example.rickandmorty.presentation.search.adapter.CharactersViewModel;
 import com.example.rickandmorty.presentation.viewmodel.CharactersSearchViewModel;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ChractersSearchFragment#newInstance} factory method to
+ * Use the {@link CharactersSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChractersSearchFragment extends Fragment {
+public class CharactersSearchFragment extends Fragment {
     private View view;
     private RecyclerView.LayoutManager layoutManager;
     private ImageView grid_icon;
@@ -31,8 +37,9 @@ public class ChractersSearchFragment extends Fragment {
     private RecyclerView recyclerView;
     private SearchView searchView;
     private CharactersSearchViewModel charactersSearchViewModel;
+    private CharacterAdapter characterAdapter;
 
-    public ChractersSearchFragment() {
+    public CharactersSearchFragment() {
         // Required empty public constructor
     }
 
@@ -42,8 +49,8 @@ public class ChractersSearchFragment extends Fragment {
      *
      * @return A new instance of fragment GridChractersFragment.
      */
-    public static ChractersSearchFragment newInstance() {
-        return new ChractersSearchFragment();
+    public static CharactersSearchFragment newInstance() {
+        return new CharactersSearchFragment();
     }
 
     @Override
@@ -51,12 +58,26 @@ public class ChractersSearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(R.layout.fragment_search_characters, container, false);
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@NonNull Bundle bundle) {
+        super.onActivityCreated(bundle);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        characterAdapter = new CharacterAdapter();
+        recyclerView.setAdapter(characterAdapter);
         charactersSearchViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory())
                 .get(CharactersSearchViewModel.class);
         setupIcons();
         setupSearchView();
-        return view;
+        charactersSearchViewModel.getCharacters().observe(getViewLifecycleOwner(), new Observer<List<CharactersViewModel>>() {
+            @Override
+            public void onChanged(List<CharactersViewModel> charactersViewModels) {
+                characterAdapter.bindViewModels(charactersViewModels);
+            }
+        });
+
     }
 
     private void setupSearchView() {
@@ -64,7 +85,8 @@ public class ChractersSearchFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //charactersSearchViewModel
+                charactersSearchViewModel.getCharactersByName(query);
+                searchView.clearFocus();
                 return true;
             }
 
@@ -76,12 +98,14 @@ public class ChractersSearchFragment extends Fragment {
     }
 
     private void setupIcons() {
-        layoutManager = new LinearLayoutManager(this.getContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         list_icon = (ImageView) view.findViewById(R.id.list_icon);
         grid_icon = (ImageView) view.findViewById(R.id.grid_icon);
-        grid_icon.setOnClickListener(v -> layoutManager = new GridLayoutManager(getActivity(), 3));
+        grid_icon.setOnClickListener(v -> recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3)));
 
-        list_icon.setOnClickListener(v -> layoutManager = new LinearLayoutManager(getActivity()));
+        list_icon.setOnClickListener(v -> recyclerView.setLayoutManager(new LinearLayoutManager(getActivity())));
     }
+
+
 
 }
