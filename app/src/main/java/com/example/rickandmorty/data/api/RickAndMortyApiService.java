@@ -8,7 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface RickAndMortyApiService {
-    @GET("character/?name={name}")
+    @GET("character")
     Single<RickAndMortySearchResponse> getCharactersByName(@Query("name") String name);
 
     @GET("character/${characterId}")

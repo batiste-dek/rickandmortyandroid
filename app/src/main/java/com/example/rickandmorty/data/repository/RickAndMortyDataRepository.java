@@ -15,11 +15,12 @@ public class RickAndMortyDataRepository implements RickAndMortyRepository {
 
     @Override
     public Single<RickAndMortySearchResponse> getCharactersByName(String name) {
-        return null;
+        return this.remoteDataSource.getCharactersByName(name);
     }
 
     @Override
     public Single<RMCharacter> getCharacter(int characterId) {
-        return null;
+
+        return this.remoteDataSource.getCharacter(characterId);
     }
 }

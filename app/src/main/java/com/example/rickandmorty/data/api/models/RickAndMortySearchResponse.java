@@ -8,6 +8,22 @@ public class RickAndMortySearchResponse {
     @SerializedName("info")
     InfoSearchResponse info;
 
-    @SerializedName("list")
+    @SerializedName("results")
     List<RMCharacter> characterList;
+
+    public InfoSearchResponse getInfo() {
+        return info;
+    }
+
+    public void setInfo(InfoSearchResponse info) {
+        this.info = info;
+    }
+
+    public List<RMCharacter> getCharacterList() {
+        return characterList;
+    }
+
+    public void setCharacterList(List<RMCharacter> characterList) {
+        this.characterList = characterList;
+    }
 }
