@@ -70,7 +70,9 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
             Glide
                     .with(itemView)
                     .load(charactersViewModel.image)
-                    .centerCrop().transition(DrawableTransitionOptions.withCrossFade(2))
+                    .centerCrop()
+                    .transition(DrawableTransitionOptions.withCrossFade(2))
+                    .override(300)
                     .into(imageView);
         }
     }

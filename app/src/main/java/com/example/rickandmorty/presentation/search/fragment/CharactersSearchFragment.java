@@ -71,12 +71,12 @@ public class CharactersSearchFragment extends Fragment {
                 .get(CharactersSearchViewModel.class);
         setupIcons();
         setupSearchView();
-        charactersSearchViewModel.getCharacters().observe(getViewLifecycleOwner(), new Observer<List<CharactersViewModel>>() {
-            @Override
-            public void onChanged(List<CharactersViewModel> charactersViewModels) {
-                characterAdapter.bindViewModels(charactersViewModels);
-            }
-        });
+        charactersSearchViewModel
+                .getCharacters()
+                .observe(
+                        getViewLifecycleOwner(),
+                        charactersViewModels -> characterAdapter.bindViewModels(charactersViewModels)
+                );
 
     }
 
@@ -98,14 +98,18 @@ public class CharactersSearchFragment extends Fragment {
     }
 
     private void setupIcons() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        layoutManager = new LinearLayoutManager(this.getContext());
+        recyclerView.setLayoutManager(layoutManager);
         list_icon = (ImageView) view.findViewById(R.id.list_icon);
         grid_icon = (ImageView) view.findViewById(R.id.grid_icon);
-        grid_icon.setOnClickListener(v -> recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3)));
-
-        list_icon.setOnClickListener(v -> recyclerView.setLayoutManager(new LinearLayoutManager(getActivity())));
+        grid_icon.setOnClickListener(v -> changeLayoutManager(new GridLayoutManager(getActivity(), 2)));
+        list_icon.setOnClickListener(v -> changeLayoutManager(new LinearLayoutManager(getActivity())));
     }
 
+    private void changeLayoutManager(LinearLayoutManager layoutManager) {
+        this.layoutManager = layoutManager;
+        recyclerView.setLayoutManager(this.layoutManager);
+    }
 
 
 }
