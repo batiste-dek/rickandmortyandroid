@@ -25,21 +25,22 @@
             android:id="@+id/icons_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
+            android:layout_margin="4dp"
+            android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/search_view">
 
             <ImageView
                 android:id="@+id/grid_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_grid" />
 
             <ImageView
                 android:id="@+id/list_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:src="@drawable/ic_list" />
         </LinearLayout>
 

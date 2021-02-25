@@ -98,7 +98,7 @@ public class CharactersSearchFragment extends Fragment {
     }
 
     private void setupIcons() {
-        layoutManager = new LinearLayoutManager(this.getContext());
+        layoutManager = new GridLayoutManager(this.getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
         list_icon = (ImageView) view.findViewById(R.id.list_icon);
         grid_icon = (ImageView) view.findViewById(R.id.grid_icon);
