@@ -56,17 +56,20 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         private View itemView;
         private ImageView imageView;
         private TextView nameView;
+        private TextView speciesView;
 
         public CharacterViewHolder(@NonNull View itemView) {
             super(itemView);
             this.itemView = itemView;
             this.imageView = itemView.findViewById(R.id.character_image);
             this.nameView = itemView.findViewById(R.id.character_name);
+            this.speciesView = itemView.findViewById(R.id.character_species);
 
         }
 
         public void bindDataToView(CharactersViewModel charactersViewModel) {
             this.nameView.setText(charactersViewModel.getName());
+            this.speciesView.setText(charactersViewModel.getSpecies());
             Glide
                     .with(itemView)
                     .load(charactersViewModel.image)

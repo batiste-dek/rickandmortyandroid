@@ -3,42 +3,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:elevation="4dp"
     android:layout_marginBottom="4dp"
-    app:cardUseCompatPadding="true"
-    app:cardCornerRadius="4dp">
+    android:elevation="4dp"
+    app:cardCornerRadius="4dp"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
-    android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="4"
-        >
+        android:padding="8dp"
+        android:weightSum="4">
 
         <ImageView
             android:id="@+id/character_image"
-            android:layout_gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:scaleType="centerCrop"
             android:layout_height="0dp"
-            android:layout_weight="3" />
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="3"
+            android:scaleType="centerCrop" />
+
         <TextView
             android:id="@+id/character_name"
             android:layout_width="match_parent"
-            android:textStyle="bold"
+            android:layout_height="0dp"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
             android:textColor="@color/dark_grey"
             android:textSize="18dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/character_species"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Human"
+            android:textColor="@color/light_grey" />
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:text="@string/details"
-        android:textColor="@color/purple_500"
-        android:textStyle="bold"
-        android:background="@android:color/transparent" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:text="@string/details"
+            android:textSize="16dp"
+            android:textColor="@color/purple_500"
+            android:textStyle="bold" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
