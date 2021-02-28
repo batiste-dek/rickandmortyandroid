@@ -1,11 +1,11 @@
 package com.example.rickandmorty.presentation.search.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,12 +18,10 @@ import android.widget.ImageView;
 
 import com.example.rickandmorty.R;
 import com.example.rickandmorty.data.di.FakeDependencyInjection;
+import com.example.rickandmorty.presentation.DetailsActivity;
 import com.example.rickandmorty.presentation.search.adapter.CharacterActionInterface;
 import com.example.rickandmorty.presentation.search.adapter.CharacterAdapter;
-import com.example.rickandmorty.presentation.search.adapter.CharactersViewModel;
 import com.example.rickandmorty.presentation.viewmodel.CharactersSearchViewModel;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -113,7 +111,15 @@ public class CharactersSearchFragment extends Fragment implements CharacterActio
     }
 
     public void addCharacterDetails(int id) {
-        this.charactersSearchViewModel.addCharacterDetails(id);
+        this.charactersSearchViewModel.addCharacterDetails(id, () -> this.openNewActivity(id));
+    }
+
+    private Void openNewActivity(int id) {
+        System.out.println(id);
+        Intent i = new Intent(getActivity(), DetailsActivity.class);
+        i.putExtra("characterId", id);
+        startActivity(i);
+        return null;
     }
 
 

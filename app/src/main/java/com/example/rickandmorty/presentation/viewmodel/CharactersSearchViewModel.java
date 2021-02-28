@@ -11,8 +11,8 @@ import com.example.rickandmorty.presentation.search.mapper.CharacterToCharacterV
 import com.example.rickandmorty.presentation.search.mapper.CharacterViewModelToCharacterEntityMapper;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -59,7 +59,7 @@ public class CharactersSearchViewModel extends ViewModel {
                 }));
     }
 
-    public void addCharacterDetails(int id) {
+    public void addCharacterDetails(int id, Callable<Void> callback) {
         List<CharactersViewModel> characters = this.characters.getValue();
         CharactersViewModel character = null;
         for (CharactersViewModel c : characters) {
@@ -76,6 +76,11 @@ public class CharactersSearchViewModel extends ViewModel {
 
                     @Override
                     public void onComplete() {
+                        try {
+                            callback.call();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                     }
 
