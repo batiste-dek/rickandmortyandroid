@@ -1,8 +1,14 @@
 package com.example.rickandmorty.data.di;
 
+import android.content.Context;
+
+import androidx.room.Room;
+
 import com.example.rickandmorty.data.api.RickAndMortyApiService;
+import com.example.rickandmorty.data.db.CharacterDatabase;
 import com.example.rickandmorty.data.repository.RickAndMortyDataRepository;
 import com.example.rickandmorty.data.repository.RickAndMortyRepository;
+import com.example.rickandmorty.data.repository.local.RickAndMortyLocalDataSource;
 import com.example.rickandmorty.data.repository.remote.RickAndMortyRemoteDataSource;
 import com.example.rickandmorty.presentation.ViewModelFactory;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -25,6 +31,8 @@ public class FakeDependencyInjection {
     private static RickAndMortyApiService apiService;
     private static RickAndMortyRepository repository;
     private static ViewModelFactory viewModelFactory;
+    private static CharacterDatabase characterDatabase;
+    private static Context appContext;
 
     public static ViewModelFactory getViewModelFactory() {
         if (viewModelFactory == null) {
@@ -82,11 +90,41 @@ public class FakeDependencyInjection {
         return apiService;
     }
 
+    /**
+     * Creates and/or return a singleton RickAndMortyRepository object
+     *
+     * @return RickAndMortyRepository singleton
+     */
     private static RickAndMortyRepository getRepository() {
         if (repository == null) {
-            repository = new RickAndMortyDataRepository(new RickAndMortyRemoteDataSource(getApiService()));
+            repository = new RickAndMortyDataRepository(
+                    new RickAndMortyRemoteDataSource(getApiService()),
+                    new RickAndMortyLocalDataSource(getDatabase())
+            );
         }
         return repository;
+    }
+
+    /**
+     * Set the application context.
+     * We need this application context to setup our Room database from this class.
+     *
+     * @param context the application context
+     */
+    public static void setContext(Context context) {
+        appContext = context;
+    }
+
+    /**
+     * Creates and/or return a singleton CharacterDatabase object
+     *
+     * @return CharacterDatabase singleton
+     */
+    private static CharacterDatabase getDatabase() {
+        if (characterDatabase == null) {
+            characterDatabase = Room.databaseBuilder(appContext, CharacterDatabase.class, "db").build();
+        }
+        return characterDatabase;
     }
 
 
