@@ -19,6 +19,7 @@ public class CharacterToCharacterViewModelMapper {
         charactersViewModel.setSpecies(character.getSpecies());
         charactersViewModel.setStatus(character.getStatus());
         charactersViewModel.setType(character.getType());
+        charactersViewModel.setEpisodes(character.getEpisodes());
         return charactersViewModel;
     }
 

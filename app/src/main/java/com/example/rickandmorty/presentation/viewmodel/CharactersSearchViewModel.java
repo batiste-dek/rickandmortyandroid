@@ -8,6 +8,7 @@ import com.example.rickandmorty.data.api.models.RickAndMortySearchResponse;
 import com.example.rickandmorty.data.repository.RickAndMortyRepository;
 import com.example.rickandmorty.presentation.search.adapter.CharactersViewModel;
 import com.example.rickandmorty.presentation.search.mapper.CharacterToCharacterViewModelMapper;
+import com.example.rickandmorty.presentation.search.mapper.CharacterViewModelToCharacterEntityMapper;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -23,12 +25,14 @@ public class CharactersSearchViewModel extends ViewModel {
     private RickAndMortyRepository repository;
     private CompositeDisposable compositeDisposable;
     private CharacterToCharacterViewModelMapper characterToCharacterViewModelMapper;
+    private CharacterViewModelToCharacterEntityMapper characterViewModelToCharacterEntityMapper;
     private MutableLiveData<List<CharactersViewModel>> characters = new MutableLiveData<List<CharactersViewModel>>();
 
     public CharactersSearchViewModel(RickAndMortyRepository repository) {
         this.repository = repository;
         this.compositeDisposable = new CompositeDisposable();
         this.characterToCharacterViewModelMapper = new CharacterToCharacterViewModelMapper();
+        this.characterViewModelToCharacterEntityMapper = new CharacterViewModelToCharacterEntityMapper();
     }
 
     public MutableLiveData<List<CharactersViewModel>> getCharacters() {
@@ -53,6 +57,35 @@ public class CharactersSearchViewModel extends ViewModel {
 
                     }
                 }));
+    }
+
+    public void addCharacterDetails(int id) {
+        List<CharactersViewModel> characters = this.characters.getValue();
+        CharactersViewModel character = null;
+        for (CharactersViewModel c : characters) {
+            if (c.getId() == id) {
+                character = c;
+                break;
+            }
+        }
+        compositeDisposable.add(
+                this.repository.addCharacterDetails(this.characterViewModelToCharacterEntityMapper.map(character))
+                        .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableCompletableObserver() {
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                })
+
+        );
     }
 
     public Single<RMCharacter> getCharacter(int characterId) {

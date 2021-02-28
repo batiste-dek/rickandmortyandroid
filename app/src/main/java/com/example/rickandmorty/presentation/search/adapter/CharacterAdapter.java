@@ -3,6 +3,7 @@ package com.example.rickandmorty.presentation.search.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,7 +24,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         View v = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.character_item, parent, false);
-        CharacterViewHolder characterViewHolder = new CharacterViewHolder(v);
+        CharacterViewHolder characterViewHolder = new CharacterViewHolder(v, characterActionInterface);
         return characterViewHolder;
     }
 
@@ -38,9 +39,11 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
     }
 
     private List<CharactersViewModel> charactersViewModelList;
+    private CharacterActionInterface characterActionInterface;
 
-    public CharacterAdapter() {
+    public CharacterAdapter(CharacterActionInterface characterActionInterface) {
         this.charactersViewModelList = new ArrayList<>();
+        this.characterActionInterface = characterActionInterface;
     }
 
     public void bindViewModels(List<CharactersViewModel> charactersViewModels) {
@@ -57,13 +60,17 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         private ImageView imageView;
         private TextView nameView;
         private TextView speciesView;
+        private Button detailsButton;
+        private CharacterActionInterface characterActionInterface;
 
-        public CharacterViewHolder(@NonNull View itemView) {
+        public CharacterViewHolder(@NonNull View itemView, CharacterActionInterface characterActionInterface) {
             super(itemView);
             this.itemView = itemView;
             this.imageView = itemView.findViewById(R.id.character_image);
             this.nameView = itemView.findViewById(R.id.character_name);
             this.speciesView = itemView.findViewById(R.id.character_species);
+            this.detailsButton = itemView.findViewById(R.id.character_details_button);
+            this.characterActionInterface = characterActionInterface;
 
         }
 
@@ -77,6 +84,9 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
                     .transition(DrawableTransitionOptions.withCrossFade(2))
                     .override(300)
                     .into(imageView);
+            this.detailsButton.setOnClickListener(
+                    v -> this.characterActionInterface.addCharacterDetails(charactersViewModel.getId())
+            );
         }
     }
 }

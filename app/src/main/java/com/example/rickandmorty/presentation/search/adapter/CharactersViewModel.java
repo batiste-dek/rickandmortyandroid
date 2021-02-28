@@ -4,6 +4,7 @@ import com.example.rickandmorty.data.api.models.RMLocation;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CharactersViewModel {
     int id;
@@ -88,4 +89,26 @@ public class CharactersViewModel {
     String originName;
     String locationName;
     String image;
+    private List<String> episodes;
+
+    public List<String> getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(List<String> episodes) {
+        this.episodes = episodes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CharactersViewModel that = (CharactersViewModel) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

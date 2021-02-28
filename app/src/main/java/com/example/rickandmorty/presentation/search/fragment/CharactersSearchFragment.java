@@ -18,6 +18,7 @@ import android.widget.ImageView;
 
 import com.example.rickandmorty.R;
 import com.example.rickandmorty.data.di.FakeDependencyInjection;
+import com.example.rickandmorty.presentation.search.adapter.CharacterActionInterface;
 import com.example.rickandmorty.presentation.search.adapter.CharacterAdapter;
 import com.example.rickandmorty.presentation.search.adapter.CharactersViewModel;
 import com.example.rickandmorty.presentation.viewmodel.CharactersSearchViewModel;
@@ -29,7 +30,7 @@ import java.util.List;
  * Use the {@link CharactersSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CharactersSearchFragment extends Fragment {
+public class CharactersSearchFragment extends Fragment implements CharacterActionInterface {
     private View view;
     private RecyclerView.LayoutManager layoutManager;
     private ImageView grid_icon;
@@ -65,7 +66,7 @@ public class CharactersSearchFragment extends Fragment {
     public void onActivityCreated(@NonNull Bundle bundle) {
         super.onActivityCreated(bundle);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        characterAdapter = new CharacterAdapter();
+        characterAdapter = new CharacterAdapter(this);
         recyclerView.setAdapter(characterAdapter);
         charactersSearchViewModel = new ViewModelProvider(requireActivity(), FakeDependencyInjection.getViewModelFactory())
                 .get(CharactersSearchViewModel.class);
@@ -109,6 +110,10 @@ public class CharactersSearchFragment extends Fragment {
     private void changeLayoutManager(LinearLayoutManager layoutManager) {
         this.layoutManager = layoutManager;
         recyclerView.setLayoutManager(this.layoutManager);
+    }
+
+    public void addCharacterDetails(int id) {
+        this.charactersSearchViewModel.addCharacterDetails(id);
     }
 
 
