@@ -71,24 +71,24 @@ public class CharactersSearchViewModel extends ViewModel {
         compositeDisposable.add(
                 this.repository.addCharacterDetails(this.characterViewModelToCharacterEntityMapper.map(character))
                         .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableCompletableObserver() {
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableCompletableObserver() {
 
-                    @Override
-                    public void onComplete() {
-                        try {
-                            callback.call();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                            @Override
+                            public void onComplete() {
+                                try {
+                                    callback.call();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
 
-                    }
+                            }
 
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                    }
-                })
+                            @Override
+                            public void onError(@NonNull Throwable e) {
+                                System.out.println(e);
+                            }
+                        })
 
         );
     }

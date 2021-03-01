@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Rick and Morty</string>
     <string name="details">Details</string>
+    <string name="details_name">Name: </string>
+    <string name="details_location">Location: </string>
+    <string name="details_type">Type: </string>
+    <string name="details_origin">Origin: </string>
+    <string name="details_gender">Gender: </string>
+    <string name="details_nb_episodes">Number of episodes: </string>
+    <string name="details_species">Species: </string>
+    <string name="details_status">Status: </string>
 </resources>

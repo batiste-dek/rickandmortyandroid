@@ -2,6 +2,7 @@ package com.example.rickandmorty.data.db;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.rickandmorty.data.db.entity.CharacterEntity;
@@ -14,6 +15,6 @@ public interface CharactersDAO {
     @Query("Select * FROM Character WHERE id = :id LIMIT 1")
     Maybe<CharacterEntity> findById(int id);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     Completable insert(CharacterEntity entity);
 }
