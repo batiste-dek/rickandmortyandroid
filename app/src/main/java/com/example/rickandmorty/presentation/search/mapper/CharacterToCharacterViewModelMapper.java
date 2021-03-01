@@ -8,6 +8,12 @@ import java.util.List;
 
 public class CharacterToCharacterViewModelMapper {
 
+    /**
+     * Mapper for single RMCharacter from API to ViewModel
+     *
+     * @param character the data coming from the API
+     * @return the ViewModel data
+     */
     private CharactersViewModel map(RMCharacter character) {
         CharactersViewModel charactersViewModel = new CharactersViewModel();
         charactersViewModel.setGender(character.getGender());
@@ -23,6 +29,12 @@ public class CharacterToCharacterViewModelMapper {
         return charactersViewModel;
     }
 
+    /**
+     * Mapper for list of RMCharacter from API to ViewModel
+     *
+     * @param characterList the data coming from the API
+     * @return the list of ViewModel data
+     */
     public List<CharactersViewModel> map(List<RMCharacter> characterList) {
         List<CharactersViewModel> list = new ArrayList<>();
         for (RMCharacter character : characterList) {

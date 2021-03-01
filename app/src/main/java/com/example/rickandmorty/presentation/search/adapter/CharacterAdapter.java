@@ -41,11 +41,21 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
     private List<CharactersViewModel> charactersViewModelList;
     private CharacterActionInterface characterActionInterface;
 
+    /**
+     * Constructor for class CharacterAdapter
+     *
+     * @param characterActionInterface the interface for onClick listeners
+     */
     public CharacterAdapter(CharacterActionInterface characterActionInterface) {
         this.charactersViewModelList = new ArrayList<>();
         this.characterActionInterface = characterActionInterface;
     }
 
+    /**
+     * Binds list of view models to the adapter
+     *
+     * @param charactersViewModels the list of view models to display
+     */
     public void bindViewModels(List<CharactersViewModel> charactersViewModels) {
         this.charactersViewModelList.clear();
         for (CharactersViewModel viewModel : charactersViewModels) {
@@ -63,6 +73,12 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         private Button detailsButton;
         private CharacterActionInterface characterActionInterface;
 
+        /**
+         * Constructor for class CharacterViewHolder
+         *
+         * @param itemView                 the parent view
+         * @param characterActionInterface the interface for onClick listeners
+         */
         public CharacterViewHolder(@NonNull View itemView, CharacterActionInterface characterActionInterface) {
             super(itemView);
             this.itemView = itemView;
@@ -74,6 +90,11 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
 
         }
 
+        /**
+         * Utils method to bind data to the views
+         *
+         * @param charactersViewModel the view model to use and display
+         */
         public void bindDataToView(CharactersViewModel charactersViewModel) {
             this.nameView.setText(charactersViewModel.getName());
             this.speciesView.setText(charactersViewModel.getSpecies());

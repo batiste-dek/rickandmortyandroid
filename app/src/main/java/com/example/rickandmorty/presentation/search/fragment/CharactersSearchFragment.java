@@ -79,6 +79,9 @@ public class CharactersSearchFragment extends Fragment implements CharacterActio
 
     }
 
+    /**
+     * Utils method to setup the search view and the  attached listeners
+     */
     private void setupSearchView() {
         searchView = (SearchView) view.findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -96,6 +99,9 @@ public class CharactersSearchFragment extends Fragment implements CharacterActio
         });
     }
 
+    /**
+     * Utils method to set up the icons and attached layout_manager
+     */
     private void setupIcons() {
         layoutManager = new GridLayoutManager(this.getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
@@ -105,15 +111,31 @@ public class CharactersSearchFragment extends Fragment implements CharacterActio
         list_icon.setOnClickListener(v -> changeLayoutManager(new LinearLayoutManager(getActivity())));
     }
 
+    /**
+     * Utils method used on click to re-set the layout manager
+     *
+     * @param layoutManager
+     */
     private void changeLayoutManager(LinearLayoutManager layoutManager) {
         this.layoutManager = layoutManager;
         recyclerView.setLayoutManager(this.layoutManager);
     }
 
+    /**
+     * Method to add the character details to our local database and to open a new activity on success
+     *
+     * @param id the id of the character to save
+     */
     public void addCharacterDetails(int id) {
         this.charactersSearchViewModel.addCharacterDetails(id, () -> this.openNewActivity(id));
     }
 
+    /**
+     * Utils callback method used to open the new activity on click
+     *
+     * @param id the id of the character to save
+     * @return null
+     */
     private Void openNewActivity(int id) {
         System.out.println(id);
         Intent i = new Intent(getActivity(), DetailsActivity.class);

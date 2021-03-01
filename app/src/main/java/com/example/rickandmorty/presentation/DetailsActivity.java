@@ -50,20 +50,27 @@ public class DetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         characterId = intent.getIntExtra("characterId", -1);
+        // if we don't have the characterId, we cannot fetch the data from the database.
+        // Therefore we want to quit this activity
         if (characterId == -1) {
             finish();
         }
         characterDetailsViewModel = new ViewModelProvider(this, FakeDependencyInjection.getViewModelFactory())
                 .get(CharacterDetailsViewModel.class);
         characterDetailsViewModel
-                .getCharacter(characterId)
+                .getCharacter()
                 .observe(
                         this,
                         characterDetails -> this.bindDataToView(characterDetails)
                 );
-        characterDetailsViewModel.getCharactersById(characterId);
+        characterDetailsViewModel.getCharacterById(characterId);
     }
 
+    /**
+     * Adapter method to bind data to the views
+     *
+     * @param characterDetails the data to display
+     */
     private void bindDataToView(CharacterDetails characterDetails) {
         detailsSpeciesView.setText(characterDetails.getSpecies());
         detailsGenderView.setText(characterDetails.getGender());

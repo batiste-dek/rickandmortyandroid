@@ -3,6 +3,12 @@ package com.example.rickandmorty.presentation.details.mapper;
 import com.example.rickandmorty.data.db.entity.CharacterEntity;
 
 public class CharacterEntityToCharacterDetailsMapper {
+    /**
+     * Mapper function
+     *
+     * @param characterEntity the data from the database
+     * @return model used by DetailsActivity screen
+     */
     public CharacterDetails map(CharacterEntity characterEntity) {
         CharacterDetails characterDetails = new CharacterDetails();
         characterDetails.id = characterEntity.id;

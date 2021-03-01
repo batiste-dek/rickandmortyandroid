@@ -11,6 +11,10 @@ import com.example.rickandmorty.presentation.viewmodel.CharactersSearchViewModel
 public class ViewModelFactory implements ViewModelProvider.Factory {
     private final RickAndMortyRepository repository;
 
+    /**
+     * Constructor of class ViewModelFactory
+     * @param repository the repository interface to pass to ViewModels
+     */
     public ViewModelFactory(RickAndMortyRepository repository) {
         this.repository = repository;
     }

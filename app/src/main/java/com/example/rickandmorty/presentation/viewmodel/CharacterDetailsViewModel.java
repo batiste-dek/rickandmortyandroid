@@ -22,37 +22,54 @@ public class CharacterDetailsViewModel extends ViewModel {
     private final CharacterEntityToCharacterDetailsMapper mapper;
     private RickAndMortyRepository repository;
     private MutableLiveData<CharacterDetails> characterDetailsLiveData;
+
+    /**
+     * Constructor for class CharacterDetailsViewModel
+     *
+     * @param repository the repository implementing our interface
+     */
     public CharacterDetailsViewModel(RickAndMortyRepository repository) {
         this.repository = repository;
         this.compositeDisposable = new CompositeDisposable();
         this.mapper = new CharacterEntityToCharacterDetailsMapper();
         this.characterDetailsLiveData = new MutableLiveData<>();
     }
-    public void getCharactersById(int characterId) {
+
+    /**
+     * Fetch character details given its id and subscribe to the answer
+     *
+     * @param characterId
+     */
+    public void getCharacterById(int characterId) {
         compositeDisposable.clear();
         compositeDisposable.add(repository.getCharacterById(characterId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-        .subscribeWith(new DisposableMaybeObserver<CharacterEntity>() {
-            @Override
-            public void onSuccess(@NonNull CharacterEntity characterEntity) {
-                characterDetailsLiveData.setValue(mapper.map(characterEntity));
-            }
+                .subscribeWith(new DisposableMaybeObserver<CharacterEntity>() {
+                    @Override
+                    public void onSuccess(@NonNull CharacterEntity characterEntity) {
+                        characterDetailsLiveData.setValue(mapper.map(characterEntity));
+                    }
 
-            @Override
-            public void onError(@NonNull Throwable e) {
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        return;
+                    }
 
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        }));
+                    @Override
+                    public void onComplete() {
+                        return;
+                    }
+                }));
 
     }
 
-    public MutableLiveData<CharacterDetails> getCharacter(int characterId) {
+    /**
+     * Getter for character data
+     *
+     * @return the characters details data
+     */
+    public MutableLiveData<CharacterDetails> getCharacter() {
         return characterDetailsLiveData;
     }
 }

@@ -92,8 +92,4 @@ public class CharactersSearchViewModel extends ViewModel {
 
         );
     }
-
-    public Single<RMCharacter> getCharacter(int characterId) {
-        return this.repository.getCharacter(characterId);
-    }
 }
