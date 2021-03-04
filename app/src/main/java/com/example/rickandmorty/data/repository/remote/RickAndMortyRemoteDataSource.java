@@ -16,8 +16,4 @@ public class RickAndMortyRemoteDataSource {
     public Single<RickAndMortySearchResponse> getCharactersByName(String name) {
         return this.apiService.getCharactersByName(name);
     }
-
-    public Single<RMCharacter> getCharacter(int characterId) {
-        return this.apiService.getCharacter(characterId);
-    }
 }

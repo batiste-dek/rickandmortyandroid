@@ -10,7 +10,6 @@ import io.reactivex.Single;
 
 public interface RickAndMortyRepository {
     Single<RickAndMortySearchResponse> getCharactersByName(String name);
-    Single<RMCharacter> getCharacter(int characterId);
     public Completable addCharacterDetails(CharacterEntity characterEntity);
     public Maybe<CharacterEntity> getCharacterById(int id);
 }

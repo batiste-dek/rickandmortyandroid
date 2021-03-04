@@ -25,11 +25,6 @@ public class RickAndMortyDataRepository implements RickAndMortyRepository {
     }
 
     @Override
-    public Single<RMCharacter> getCharacter(int characterId) {
-        return this.remoteDataSource.getCharacter(characterId);
-    }
-
-    @Override
     public Completable addCharacterDetails(CharacterEntity characterEntity) {
         return this.localDataSource.addCharacterDetails(characterEntity);
     }

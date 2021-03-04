@@ -11,7 +11,4 @@ public interface RickAndMortyApiService {
     @GET("character")
     Single<RickAndMortySearchResponse> getCharactersByName(@Query("name") String name);
 
-    @GET("character/${characterId}")
-    Single<RMCharacter> getCharacter(@Query("characterId") int characterId);
-
 }
